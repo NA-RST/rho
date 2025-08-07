@@ -21,6 +21,7 @@ foreach pull in pull1 pull2 pull3 {
     display in red "DUPLICATE IDS EXIST IN DATASET `pull'. THE FOLLOWING HAVE A NON-UNIQUE ID:"
     bysort id: gen duplicate_id = _N
     list id Q1 Q2 Q3* if duplicate_id > 1
+**# Bookmark #1
     *If the ID does not uniquely identify observations in pull, check to see if a combination of ID and name do.
     capture isid id Q1 Q2
     if _rc != 0 {
@@ -87,7 +88,16 @@ foreach var of varlist Q5 Q3* region* treat Q4 {
 ****************************************************************************************************
 
 *STEP A -- Rename and label variables as necessary (refer to the code book)
-
+rename (Q1 Q2 Q3_1 Q3_2 Q3_3 Q4 Q5) ///
+(firstname lastname dob_day dob_mon dob_yr educ sex)
+label var firstname "What is your first given name?"
+label var lastname "What is your last or family name?"
+label var dob_day "Day - Date of Birth"
+label var dob_mon "Month - Date of Birth"
+label var dob_yr "Year - Date of Birth"
+label var educ "What is the highest level of education you have
+attained? (0-4)"
+label var sex "M for male, F for female"
 
 
 *STEP B -- For the missing application dates that don't need an answer, recode them as "N/A" (".n"). 
