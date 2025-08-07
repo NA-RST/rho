@@ -92,4 +92,13 @@ foreach var of varlist Q5 Q3* region* treat Q4 {
 
 *STEP B -- For the missing application dates that don't need an answer, recode them as "N/A" (".n"). 
           *For the missing application dates that should be there, recode them as "don't know" (".d")
-          
+
+		  foreach applyvar of varlist day_apply month_apply year_apply {
+replace `applyvar' = .n if `applyvar' == . & prog_apply ==
+
+0
+
+replace `applyvar' = .d if `applyvar' == . & prog_apply ==
+
+1
+}
